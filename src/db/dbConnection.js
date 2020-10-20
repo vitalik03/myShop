@@ -4,7 +4,7 @@ module.exports = {
     connection: {
       host: '127.0.0.1',
       port: '27017',
-      database: 'myshop',
+      databaseName: 'myshop',
     },
   },
 };

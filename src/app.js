@@ -1,22 +1,24 @@
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const express = require('express');
+const goodsRoute = require('./routes/goods/index');
+const config = require('./config/config');
+const dbConf = require('./db/dbConnection');
 
 const app = express();
 
-const config = require('./config/config');
-
-const dbConf = require('./db/dbConnection');
-
 const { host } = dbConf.database.connection;
 const { port } = dbConf.database.connection;
-const { dbName } = dbConf.database.connection.database;
+const { databaseName } = dbConf.database.connection;
 const { client } = dbConf.database;
-const database = `${client}://${host}:${port}/${dbName}`;
+const database = `${client}://${host}:${port}/${databaseName}`;
 mongoose.connect(database, { useNewUrlParser: true });
 
 app
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json());
+
+app
+  .use('/goods', goodsRoute);
 
 app.listen(config.api.port);
