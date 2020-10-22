@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const variantsOfMeasurability = require('../enums/variantsOfMeasurability');
 
 const { Schema } = mongoose;
 
-const userScheme = new Schema({
+const goodsScheme = new Schema({
   name: {
     type: String,
     minlength: 3,
@@ -12,14 +13,14 @@ const userScheme = new Schema({
     type: Number,
   },
   expirationDate: {
-    type: String,
+    type: Date,
   },
   measurability: {
-    type: String,
+    type: variantsOfMeasurability,
   },
   count: {
     type: Number,
   },
 });
 
-module.exports = userScheme;
+module.exports = goodsScheme;
