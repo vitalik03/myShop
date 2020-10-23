@@ -1,15 +1,15 @@
+/* eslint-disable max-len */
 const Goods = require('../db/goodsService');
 const constants = require('../constants/index');
 const variantOfMeasurability = require('../enums/variantsOfMeasurability');
 
 const createGoods = async (req, res) => {
   const goodsData = req.body;
-  // eslint-disable-next-line max-len
   if (goodsData.measurability === variantOfMeasurability.KG || goodsData.measurability === variantOfMeasurability.UNIT) {
     const goods = await new Goods().createGoods(goodsData);
     return res.status(constants.STATUS.Ok).json(goods);
   }
-  return res.status(constants.STATUS.BadRequest).json(constants.BAD_REQUEST);
+  return res.status(constants.STATUS.BadRequest).json(constants.Measurability);
 };
 
 const deleteGoods = async (req, res) => {
@@ -29,8 +29,11 @@ const updateGoods = async (req, res) => {
   if (!id) return res.status(constants.STATUS.BadRequest).json(constants.BAD_REQUEST);
   const findUpdateGoods = await new Goods().getOneGoods(id);
   if (findUpdateGoods) {
-    const updatedGoods = await new Goods().updateGoods(id, goodsData);
-    return res.status(constants.STATUS.Ok).json(updatedGoods);
+    if (goodsData.measurability === variantOfMeasurability.KG || goodsData.measurability === variantOfMeasurability.UNIT) {
+      const updatedGoods = await new Goods().updateGoods(id, goodsData);
+      return res.status(constants.STATUS.Ok).json(updatedGoods);
+    }
+    return res.status(constants.STATUS.BadRequest).json(constants.Measurability);
   }
   return res.status(constants.STATUS.NotFound).json(constants.NOT_FOUND);
 };

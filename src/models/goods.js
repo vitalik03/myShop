@@ -21,6 +21,10 @@ const goodsScheme = new Schema({
   count: {
     type: Number,
   },
+  provider_id: {
+    type: Schema.ObjectId,
+    ref: 'Provider',
+  },
 });
 
 module.exports = goodsScheme;

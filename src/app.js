@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const express = require('express');
 const goodsRoute = require('./routes/goods/index');
+const providerRoute = require('./routes/providers/index');
 const config = require('./config/config');
 const dbConf = require('./db/dbConnection');
 
@@ -19,6 +20,7 @@ app
   .use(bodyParser.json());
 
 app
-  .use('/goods', goodsRoute);
+  .use('/goods', goodsRoute)
+  .use('/provider', providerRoute);
 
 app.listen(config.api.port);
